@@ -1,103 +1,129 @@
+"use client";
+import { IconSparkles } from "@tabler/icons-react";
 import Image from "next/image";
+import { motion, useAnimationControls } from "motion/react";
+import { useEffect } from "react";
+import PictureCard from "@/components/ui/picture-card";
+import About from "@/components/about";
 
 export default function Home() {
-  return (
-    <div className="grid grid-rows-[20px_1fr_20px] items-center justify-items-center min-h-screen p-8 pb-20 gap-16 sm:p-20 font-[family-name:var(--font-geist-sans)]">
-      <main className="flex flex-col gap-[32px] row-start-2 items-center sm:items-start">
-        <Image
-          className="dark:invert"
-          src="/next.svg"
-          alt="Next.js logo"
-          width={180}
-          height={38}
-          priority
-        />
-        <ol className="list-inside list-decimal text-sm/6 text-center sm:text-left font-[family-name:var(--font-geist-mono)]">
-          <li className="mb-2 tracking-[-.01em]">
-            Get started by editing{" "}
-            <code className="bg-black/[.05] dark:bg-white/[.06] px-1 py-0.5 rounded font-[family-name:var(--font-geist-mono)] font-semibold">
-              src/app/page.tsx
-            </code>
-            .
-          </li>
-          <li className="tracking-[-.01em]">
-            Save and see your changes instantly.
-          </li>
-        </ol>
+  const fullStackControls = useAnimationControls();
+  const developerControls = useAnimationControls();
+  const badgeControls = useAnimationControls();
+  const taglineControls = useAnimationControls();
 
-        <div className="flex gap-4 items-center flex-col sm:flex-row">
-          <a
-            className="rounded-full border border-solid border-transparent transition-colors flex items-center justify-center bg-foreground text-background gap-2 hover:bg-[#383838] dark:hover:bg-[#ccc] font-medium text-sm sm:text-base h-10 sm:h-12 px-4 sm:px-5 sm:w-auto"
-            href="https://vercel.com/new?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
+  useEffect(() => {
+    const sequence = async () => {
+      // First animate the badge
+      await badgeControls.start({
+        y: 0,
+        opacity: 1,
+        transition: {
+          duration: 0.3,
+        },
+      });
+
+      // Animate both text elements with a slight delay between them
+      // Animate the "Full Stack" text - drop down with bounce and rotation reset
+      fullStackControls.start({
+        y: 0,
+        opacity: 1,
+        rotate: 0,
+        transition: {
+          type: "spring",
+          stiffness: 100,
+          damping: 5,
+          mass: 1.5,
+          velocity: 200,
+        },
+      });
+
+      // Slight delay before animating "Developer" text
+      await new Promise((resolve) => setTimeout(resolve, 80));
+
+      // Animate the "Developer" text - drop down with bounce and rotation reset
+      developerControls.start({
+        y: 0,
+        opacity: 1,
+        rotate: 0,
+        transition: {
+          type: "spring",
+          stiffness: 100,
+          damping: 5,
+          mass: 1.9,
+          velocity: 200,
+        },
+      });
+
+      // Slight delay before animating the tagline
+      await new Promise((resolve) => setTimeout(resolve, 300));
+
+      // Animate the tagline with a fade-in effect
+      taglineControls.start({
+        opacity: 1,
+        y: 0,
+        transition: {
+          duration: 0.8,
+          ease: "easeOut",
+        },
+      });
+    };
+
+    sequence();
+  }, [badgeControls, fullStackControls, developerControls, taglineControls]);
+
+  return (
+    <main className="pt-20 md:pt-44 relative">
+      <section className="flex items-center justify-between">
+        <article>
+          <motion.div
+            className="rounded-full p-1 px-4 flex items-center gap-2 border border-accent w-fit font-medium hover:bg-accent group duration-200"
+            initial={{ y: -50, opacity: 0 }}
+            animate={badgeControls}
           >
-            <Image
-              className="dark:invert"
-              src="/vercel.svg"
-              alt="Vercel logomark"
-              width={20}
-              height={20}
-            />
-            Deploy now
-          </a>
-          <a
-            className="rounded-full border border-solid border-black/[.08] dark:border-white/[.145] transition-colors flex items-center justify-center hover:bg-[#f2f2f2] dark:hover:bg-[#1a1a1a] hover:border-transparent font-medium text-sm sm:text-base h-10 sm:h-12 px-4 sm:px-5 w-full sm:w-auto md:w-[158px]"
-            href="https://nextjs.org/docs?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
+            <IconSparkles className="text-accent group-hover:text-white duration-75" />
+            <p>Let&apos;s build</p>
+          </motion.div>
+          <h1 className="max-w-[360px] text-4xl md:text-7xl font-bold mt-2 overflow-hidden">
+            <motion.span
+              initial={{ y: -200, opacity: 0, rotate: -5 }}
+              animate={fullStackControls}
+              className="inline-block origin-bottom"
+            >
+              Full Stack
+            </motion.span>{" "}
+            <motion.span
+              className="text-primary inline-block origin-bottom"
+              initial={{ y: -200, opacity: 0, rotate: 5 }}
+              animate={developerControls}
+            >
+              Developer
+            </motion.span>
+          </h1>
+          <motion.p
+            className="text-sm md:text-base mt-2 max-w-[500px] text-muted-foreground italic"
+            initial={{ opacity: 0, y: 20 }}
+            animate={taglineControls}
           >
-            Read our docs
-          </a>
+            In blackest day, in darkest night,
+            <br />
+            I architect systems that scale just right.
+            <br />
+            From backend logic to frontend delight,
+            <br />I build with precision, performance, and insight.
+          </motion.p>
+        </article>
+        <div className="relative md:mr-20">
+          <div className="rotate-12 relative z-[2] pt-5">
+            <PictureCard img={"/profile-1.jpg"} />
+          </div>
+          <div className="absolute top-0 left-0 -ml-[230px] z-[4] -rotate-[12deg]">
+            <PictureCard img={"/profile.jpg"} />
+          </div>
         </div>
-      </main>
-      <footer className="row-start-3 flex gap-[24px] flex-wrap items-center justify-center">
-        <a
-          className="flex items-center gap-2 hover:underline hover:underline-offset-4"
-          href="https://nextjs.org/learn?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <Image
-            aria-hidden
-            src="/file.svg"
-            alt="File icon"
-            width={16}
-            height={16}
-          />
-          Learn
-        </a>
-        <a
-          className="flex items-center gap-2 hover:underline hover:underline-offset-4"
-          href="https://vercel.com/templates?framework=next.js&utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <Image
-            aria-hidden
-            src="/window.svg"
-            alt="Window icon"
-            width={16}
-            height={16}
-          />
-          Examples
-        </a>
-        <a
-          className="flex items-center gap-2 hover:underline hover:underline-offset-4"
-          href="https://nextjs.org?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <Image
-            aria-hidden
-            src="/globe.svg"
-            alt="Globe icon"
-            width={16}
-            height={16}
-          />
-          Go to nextjs.org →
-        </a>
-      </footer>
-    </div>
+      </section>
+
+      <About />
+    </main>
   );
 }

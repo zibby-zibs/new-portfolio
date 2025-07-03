@@ -1,11 +1,8 @@
 import type { Metadata } from "next";
-import { DM_Sans } from "next/font/google";
 import "./globals.css";
-
-const dmSans = DM_Sans({
-  variable: "--font-dm-sans",
-  subsets: ["latin"],
-});
+import { ThemeProvider } from "@/components/theme-provider";
+import { Header } from "@/components/header";
+import Image from "next/image";
 
 export const metadata: Metadata = {
   title: "Create Next App",
@@ -19,7 +16,29 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en">
-      <body className={`${dmSans.variable} antialiased`}>{children}</body>
+      <body className={`font-dm-sans antialiased`}>
+        <ThemeProvider
+          attribute="class"
+          defaultTheme="dark"
+          enableSystem
+          disableTransitionOnChange
+        >
+          <div className="overflow-hidden container relative mx-auto min-h-screen z-10">
+            {children}
+          </div>
+          <div className="absolute top-0 right-0 z-0">
+            <Image
+              src="/pattern.png"
+              alt=""
+              width={0}
+              height={0}
+              sizes="100vw"
+              className="w-full h-full"
+            />
+          </div>
+          <Header />
+        </ThemeProvider>
+      </body>
     </html>
   );
 }
