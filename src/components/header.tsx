@@ -73,7 +73,7 @@ export function Header() {
       <FloatingDock
         items={links}
         desktopClassName="fixed bottom-5 z-50 !bg-black/40 backdrop-blur"
-        mobileClassName="fixed bottom-5 z-50 !bg-black/40 backdrop-blur"
+        mobileClassName="fixed bottom-5 z-50 !bg-white rounded-full backdrop-blur"
       />
     </div>
   );
