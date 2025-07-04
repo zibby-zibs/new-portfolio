@@ -1,8 +1,13 @@
 "use client";
-import { IconSparkles } from "@tabler/icons-react";
+import {
+  IconBrandGithubFilled,
+  IconBrandLinkedinFilled,
+  IconSparkles,
+} from "@tabler/icons-react";
 import { motion, useAnimationControls } from "motion/react";
 import { useEffect } from "react";
 import PictureCard from "@/components/ui/picture-card";
+import Link from "next/link";
 
 export default function Home() {
   const fullStackControls = useAnimationControls();
@@ -71,7 +76,7 @@ export default function Home() {
   }, [badgeControls, fullStackControls, developerControls, taglineControls]);
 
   return (
-    <main className="pt-20 md:pt-44 relative">
+    <main className="pt-20 md:pt-32 relative">
       <section className="flex flex-col md:flex-row md:items-center md:justify-between gap-8">
         <article className="text-center md:text-left">
           <motion.div
@@ -110,6 +115,16 @@ export default function Home() {
             From backend logic to frontend delight,
             <br />I build with precision, performance, and insight.
           </motion.p>
+          <div className="flex items-center gap-4 py-3">
+            <Link
+              href={"https://www.linkedin.com/in/hephzibah-oloyede-237b7915b/"}
+            >
+              <IconBrandLinkedinFilled className="text-primary" />
+            </Link>
+            <Link href={"https://www.github.com/zibby-zibs"}>
+              <IconBrandGithubFilled className="text-primary" />
+            </Link>
+          </div>
         </article>
         <div className="relative md:mr-20">
           <div className="rotate-12 relative z-[2] pt-5 hidden md:block">

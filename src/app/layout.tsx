@@ -3,6 +3,8 @@ import "./globals.css";
 import { ThemeProvider } from "@/components/theme-provider";
 import { Header } from "@/components/header";
 import Image from "next/image";
+import Link from "next/link";
+import { IconBrandGithub, IconBrandLinkedin } from "@tabler/icons-react";
 
 export const metadata: Metadata = {
   title: "Create Next App",
@@ -23,6 +25,16 @@ export default function RootLayout({
           enableSystem
           disableTransitionOnChange
         >
+          <div className="flex items-center justify-end gap-4 p-3">
+            <Link
+              href={"https://www.linkedin.com/in/hephzibah-oloyede-237b7915b/"}
+            >
+              <IconBrandLinkedin className="text-primary" />
+            </Link>
+            <Link href={"https://www.github.com/zibby-zibs"}>
+              <IconBrandGithub className="text-primary" />
+            </Link>
+          </div>
           <div className="overflow-hidden container relative mx-auto min-h-screen z-10">
             {children}
           </div>
