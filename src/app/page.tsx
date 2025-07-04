@@ -1,5 +1,6 @@
 import About from "@/components/about";
 import Home from "@/components/home";
+import Showcase from "@/components/showcase";
 import SlidingProjects from "@/components/sliding-projects";
 import { fetchProjects } from "@/lib/fetchProjects";
 import React from "react";
@@ -11,6 +12,7 @@ const page = async () => {
       <Home />
       <SlidingProjects projects={projects} />
       <About />
+      <Showcase projects={projects} />
     </div>
   );
 };
