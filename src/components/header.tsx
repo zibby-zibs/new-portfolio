@@ -1,71 +1,82 @@
+"use client";
 import React from "react";
 import { FloatingDock } from "@/components/ui/floating-deck";
 import {
   IconBrandGithub,
-  IconBrandX,
-  IconExchange,
+  IconBrandLinkedin,
+  IconUser,
   IconHome,
-  IconNewSection,
-  IconTerminal2,
+  IconBriefcase,
+  IconMail,
+  IconCode,
 } from "@tabler/icons-react";
 
 export function Header() {
+  const handleSmoothScroll = (e: React.MouseEvent<HTMLAnchorElement>, targetId: string) => {
+    e.preventDefault();
+    const targetElement = document.getElementById(targetId);
+    if (targetElement) {
+      targetElement.scrollIntoView({
+        behavior: 'smooth',
+        block: 'start',
+      });
+    }
+  };
+
   const links = [
     {
       title: "Home",
       icon: (
         <IconHome className="h-full w-full text-neutral-500 dark:text-neutral-300" />
       ),
-      href: "#",
-    },
-
-    {
-      title: "Products",
-      icon: (
-        <IconTerminal2 className="h-full w-full text-neutral-500 dark:text-neutral-300" />
-      ),
-      href: "#",
+      href: "#home",
+      onClick: (e: React.MouseEvent<HTMLAnchorElement>) => handleSmoothScroll(e, 'home'),
     },
     {
-      title: "Components",
+      title: "Projects",
       icon: (
-        <IconNewSection className="h-full w-full text-neutral-500 dark:text-neutral-300" />
+        <IconCode className="h-full w-full text-neutral-500 dark:text-neutral-300" />
       ),
-      href: "#",
+      href: "#projects",
+      onClick: (e: React.MouseEvent<HTMLAnchorElement>) => handleSmoothScroll(e, 'projects'),
     },
     {
-      title: "Aceternity UI",
+      title: "About",
       icon: (
-        <img
-          src="https://assets.aceternity.com/logo-dark.png"
-          width={20}
-          height={20}
-          alt="Aceternity Logo"
-        />
+        <IconUser className="h-full w-full text-neutral-500 dark:text-neutral-300" />
       ),
-      href: "#",
+      href: "#about",
+      onClick: (e: React.MouseEvent<HTMLAnchorElement>) => handleSmoothScroll(e, 'about'),
     },
     {
-      title: "Changelog",
+      title: "Showcase",
       icon: (
-        <IconExchange className="h-full w-full text-neutral-500 dark:text-neutral-300" />
+        <IconBriefcase className="h-full w-full text-neutral-500 dark:text-neutral-300" />
       ),
-      href: "#",
+      href: "#showcase",
+      onClick: (e: React.MouseEvent<HTMLAnchorElement>) => handleSmoothScroll(e, 'showcase'),
     },
-
     {
-      title: "Twitter",
+      title: "Contact",
       icon: (
-        <IconBrandX className="h-full w-full text-neutral-500 dark:text-neutral-300" />
+        <IconMail className="h-full w-full text-neutral-500 dark:text-neutral-300" />
       ),
-      href: "#",
+      href: "#contact",
+      onClick: (e: React.MouseEvent<HTMLAnchorElement>) => handleSmoothScroll(e, 'contact'),
     },
     {
       title: "GitHub",
       icon: (
         <IconBrandGithub className="h-full w-full text-neutral-500 dark:text-neutral-300" />
       ),
-      href: "#",
+      href: "https://github.com", // Replace with your actual GitHub URL
+    },
+    {
+      title: "LinkedIn",
+      icon: (
+        <IconBrandLinkedin className="h-full w-full text-neutral-500 dark:text-neutral-300" />
+      ),
+      href: "https://linkedin.com", // Replace with your actual LinkedIn URL
     },
   ];
   return (

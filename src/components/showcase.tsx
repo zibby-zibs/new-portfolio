@@ -1,6 +1,6 @@
 "use client";
 
-import React from "react";
+import React, { useRef, useState } from "react";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "./ui/tabs";
 import { SparklesCore } from "./ui/sparkles";
 import { Project } from "@/lib/type";
@@ -298,52 +298,189 @@ const Showcase = (props: {
 };
 
 const ProjectCard = ({ project }: { project: Project }) => {
-  console.log({ project });
+  const [mousePos, setMousePos] = useState({ x: 0, y: 0 });
+  const cardRef = useRef<HTMLDivElement>(null);
+
+  const handleMouseMove = (e: React.MouseEvent) => {
+    if (cardRef.current) {
+      const rect = cardRef.current.getBoundingClientRect();
+      setMousePos({
+        x: ((e.clientX - rect.left) / rect.width) * 100,
+        y: ((e.clientY - rect.top) / rect.height) * 100,
+      });
+    }
+  };
+
   return (
-    <div className="bg-card border border-border rounded-lg overflow-hidden transform transition-transform duration-300 hover:-translate-y-2 hover:shadow-xl">
-      <div className="relative h-56 w-full">
+    <div
+      ref={cardRef}
+      className="group relative bg-card/80 backdrop-blur-sm border border-border/50 rounded-2xl overflow-hidden transform transition-all duration-700 hover:-translate-y-4 hover:scale-[1.02] hover:shadow-2xl hover:shadow-accent/10"
+      onMouseMove={handleMouseMove}
+    >
+      {/* Psychological hover effect - following cursor */}
+      <div
+        className="absolute inset-0 opacity-0 group-hover:opacity-100 transition-opacity duration-500 pointer-events-none"
+        style={{
+          background: `radial-gradient(circle at ${mousePos.x}% ${mousePos.y}%, rgba(var(--accent), 0.1) 0%, transparent 50%)`,
+        }}
+      />
+
+      {/* Morphing corner accent */}
+      <div className="absolute top-0 right-0 w-20 h-20 overflow-hidden">
+        <div className="absolute -top-10 -right-10 w-20 h-20 bg-accent/20 rounded-full blur-xl group-hover:bg-accent/30 transition-all duration-500 group-hover:scale-150" />
+      </div>
+
+      {/* Neural connection overlay */}
+      <div className="absolute inset-0 opacity-0 group-hover:opacity-20 transition-opacity duration-700">
+        <svg className="w-full h-full" viewBox="0 0 300 400">
+          <path
+            d="M50 50 Q150 100 250 50 Q200 200 100 300 Q150 250 250 350"
+            stroke="currentColor"
+            strokeWidth="1"
+            fill="none"
+            className="animate-pulse"
+          />
+          <circle
+            cx="50"
+            cy="50"
+            r="2"
+            fill="currentColor"
+            className="animate-ping"
+          />
+          <circle
+            cx="250"
+            cy="50"
+            r="2"
+            fill="currentColor"
+            className="animate-ping"
+            style={{ animationDelay: "0.5s" }}
+          />
+          <circle
+            cx="100"
+            cy="300"
+            r="2"
+            fill="currentColor"
+            className="animate-ping"
+            style={{ animationDelay: "1s" }}
+          />
+        </svg>
+      </div>
+
+      {/* Image container with psychological framing */}
+      <div className="relative h-64 w-full overflow-hidden">
+        {/* Gradient overlay for depth perception */}
+        <div className="absolute inset-0 bg-gradient-to-t from-card/80 via-transparent to-transparent z-10" />
+
         {project.image?.asset ? (
           <img
             src={urlFor(project.image.asset).url()}
             alt={project.title}
-            className="object-cover w-full h-full"
+            className="object-cover w-full h-full transition-all duration-700 group-hover:scale-110 group-hover:rotate-1"
           />
         ) : (
-          <div className="w-full h-full bg-muted flex items-center justify-center text-muted-foreground">
-            No Image
+          <div className="w-full h-full bg-gradient-to-br from-accent/20 via-secondary/10 to-primary/20 flex items-center justify-center relative">
+            {/* Abstract geometric pattern for missing images */}
+            <div className="relative">
+              <div
+                className="w-16 h-16 border-2 border-accent/50 rounded-lg rotate-45 animate-spin"
+                style={{ animationDuration: "8s" }}
+              />
+              <div
+                className="absolute inset-0 w-16 h-16 border-2 border-secondary/50 rounded-lg -rotate-45 animate-spin"
+                style={{
+                  animationDuration: "6s",
+                  animationDirection: "reverse",
+                }}
+              />
+            </div>
+            <span className="absolute bottom-4 text-muted-foreground text-sm font-medium tracking-wider">
+              {project.title}
+            </span>
+          </div>
+        )}
+
+        {/* Floating status indicator */}
+        <div className="absolute top-4 left-4 z-20">
+          <div className="flex items-center gap-2 bg-background/80 backdrop-blur-sm px-3 py-1.5 rounded-full border border-accent/30">
+            <div className="w-2 h-2 bg-accent rounded-full animate-pulse" />
+            <span className="text-xs font-medium text-accent">ACTIVE</span>
+          </div>
+        </div>
+      </div>
+
+      {/* Content with psychological spacing */}
+      <div className="p-8 relative z-10">
+        {/* Title with cognitive emphasis */}
+        <div className="mb-6">
+          <h3 className="text-2xl font-bold mb-2 text-accent group-hover:text-secondary transition-colors duration-500 tracking-tight">
+            {project.title}
+          </h3>
+
+          {/* Subtle accent line */}
+          <div className="w-0 h-0.5 bg-gradient-to-r from-accent to-secondary transition-all duration-700 group-hover:w-16" />
+        </div>
+
+        {/* Description with progressive disclosure */}
+        <div className="mb-8 relative overflow-hidden">
+          <p className="text-muted-foreground leading-relaxed line-clamp-3 group-hover:line-clamp-none transition-all duration-500">
+            {project.summary}
+          </p>
+
+          {/* Fade effect for long text */}
+          <div className="absolute bottom-0 left-0 right-0 h-6 bg-gradient-to-t from-card to-transparent group-hover:opacity-0 transition-opacity duration-500" />
+        </div>
+
+        {/* CTA with psychological urgency */}
+        {project.linkToBuild && (
+          <div className="relative">
+            <Link
+              href={project.linkToBuild.startsWith('http') ? project.linkToBuild : `https://${project.linkToBuild}`}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="group/btn relative inline-flex items-center justify-center px-8 py-4 font-semibold text-background bg-accent rounded-xl hover:bg-secondary transition-all duration-500 hover:scale-105 hover:shadow-lg hover:shadow-accent/25 overflow-hidden"
+            >
+              {/* Button background animation */}
+              <div className="absolute inset-0 bg-gradient-to-r from-accent via-secondary to-accent bg-[length:200%_100%] animate-pulse group-hover/btn:animate-none group-hover/btn:bg-[position:100%_0%] transition-all duration-500" />
+
+              <span className="relative z-10 flex items-center gap-3">
+                Explore Project
+                {/* Animated arrow */}
+                <svg
+                  className="h-5 w-5 transition-transform duration-300 group-hover/btn:translate-x-1"
+                  viewBox="0 0 24 24"
+                  fill="none"
+                >
+                  <path
+                    d="M7 17L17 7"
+                    stroke="currentColor"
+                    strokeWidth="2"
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                  />
+                  <path
+                    d="M7 7H17V17"
+                    stroke="currentColor"
+                    strokeWidth="2"
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                  />
+                </svg>
+              </span>
+
+              {/* Ripple effect */}
+              <div className="absolute inset-0 opacity-0 group-hover/btn:opacity-100 transition-opacity duration-300">
+                <div className="absolute inset-0 bg-white/20 rounded-xl animate-ping" />
+              </div>
+            </Link>
+
+            {/* Subtle glow effect */}
+            <div className="absolute inset-0 bg-accent/20 rounded-xl blur-xl opacity-0 group-hover:opacity-50 transition-opacity duration-500 -z-10" />
           </div>
         )}
       </div>
-      <div className="p-6">
-        <h3 className="text-2xl font-bold mb-2 text-accent">{project.title}</h3>
-        <p className="text-muted-foreground mb-4 line-clamp-3">
-          {project.summary}
-        </p>
-        {project.linkToBuild && (
-          <Link
-            href={project.linkToBuild || "#"}
-            target="_blank"
-            rel="noopener noreferrer"
-            className="inline-flex items-center justify-center px-6 py-3 font-medium text-background bg-accent rounded-lg hover:bg-secondary/90 transition-colors duration-300"
-          >
-            View Project
-            <svg
-              xmlns="http://www.w3.org/2000/svg"
-              className="h-5 w-5 ml-2"
-              fill="none"
-              viewBox="0 0 24 24"
-              stroke="currentColor"
-            >
-              <path
-                strokeLinecap="round"
-                strokeLinejoin="round"
-                strokeWidth={2}
-                d="M17 8l4 4m0 0l-4 4m4-4H3"
-              />
-            </svg>
-          </Link>
-        )}
-      </div>
+
+      {/* Bottom accent line */}
+      <div className="absolute bottom-0 left-0 right-0 h-1 bg-gradient-to-r from-transparent via-accent/50 to-transparent transform scale-x-0 group-hover:scale-x-100 transition-transform duration-700" />
     </div>
   );
 };

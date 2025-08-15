@@ -12,11 +12,21 @@ const page = async () => {
   const experience = await fetchExperience();
   return (
     <div className="px-5">
-      <Home />
-      <SlidingProjects projects={projects} />
-      <About />
-      <Showcase projects={projects} experiences={experience} />
-      <ContactForm />
+      <section id="home">
+        <Home />
+      </section>
+      <section id="projects">
+        <SlidingProjects projects={projects} />
+      </section>
+      <section id="about">
+        <About />
+      </section>
+      <section id="showcase">
+        <Showcase projects={projects} experiences={experience} />
+      </section>
+      <section id="contact">
+        <ContactForm />
+      </section>
     </div>
   );
 };
