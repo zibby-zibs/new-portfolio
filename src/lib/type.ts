@@ -30,3 +30,30 @@ export type Project = {
   image: Image;
   technologies: Technology[];
 };
+
+export interface Experience {
+  _createdAt: string;
+  _id: string;
+  _rev: string;
+  _updatedAt: string;
+  _type: "experience";
+  company: string;
+  companyImage: Image;
+  dateEnded: string;
+  dateStarted: string;
+  jobTitle: string;
+  points: string[];
+  socials: Social[];
+  isCrrentlyWorkingHere?: boolean;
+  technologies: Technology[];
+}
+
+export interface Social {
+  _createdAt: string;
+  _id: string;
+  _rev: string;
+  _updatedAt: string;
+  _type: "social";
+  title: string;
+  url: string;
+}

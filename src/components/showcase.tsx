@@ -5,15 +5,20 @@ import { Tabs, TabsContent, TabsList, TabsTrigger } from "./ui/tabs";
 import { SparklesCore } from "./ui/sparkles";
 import { Project } from "@/lib/type";
 import { urlFor } from "@/sanity/utils";
+import { Experience } from "@/lib/type";
+import Link from "next/link";
 
-const Showcase = (props: { projects: Project[] }) => {
+const Showcase = (props: {
+  projects: Project[];
+  experiences: Experience[];
+}) => {
   return (
     <div className="mt-32 md:mt-64 ">
       <div className="pb-8">
         <h1 className="uppercase font-bold text-4xl md:text-7xl text-primary text-center">
           Showcase
         </h1>
-        <div className="w-full h-10 relative mx-auto">
+        <div className="w-[80%] h-10 relative mx-auto">
           {/* Gradients */}
           <div className="absolute inset-x-0 top-0 bg-gradient-to-r from-transparent via-secondary to-transparent h-[2px] w-full blur-sm" />
           <div className="absolute inset-x-20 top-0 bg-gradient-to-r from-transparent via-secondary to-transparent h-[2px] w-3/4 blur-sm" />
@@ -35,18 +40,46 @@ const Showcase = (props: { projects: Project[] }) => {
           <div className="absolute inset-0 w-full h-full [mask-image:radial-gradient(350px_200px_at_top,transparent_20%,white)]"></div>
         </div>
       </div>
-      <Tabs>
-        <TabsList className="w-full h-auto bg-accent/20 backdrop-blur">
+      <Tabs defaultValue="projects">
+        <TabsList className="w-full h-auto bg-transparent backdrop-blur">
           <TabsTrigger
             value="projects"
-            className="text-lg md:text-xl font-medium !py-9"
+            className="text-lg md:text-xl font-medium !py-5 flex flex-col items-center gap-2 rounded-2xl"
           >
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              className="h-6 w-6"
+              fill="none"
+              viewBox="0 0 24 24"
+              stroke="currentColor"
+              strokeWidth={2}
+            >
+              <path
+                strokeLinecap="round"
+                strokeLinejoin="round"
+                d="M3 7v10a2 2 0 002 2h14a2 2 0 002-2V9a2 2 0 00-2-2h-6l-2-2H5a2 2 0 00-2 2z"
+              />
+            </svg>
             Projects
           </TabsTrigger>
           <TabsTrigger
             value="experience"
-            className="text-lg md:text-xl font-medium !py-9"
+            className="text-lg md:text-xl font-medium !py-5 flex flex-col items-center gap-2 rounded-2xl"
           >
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              className="h-6 w-6"
+              fill="none"
+              viewBox="0 0 24 24"
+              stroke="currentColor"
+              strokeWidth={2}
+            >
+              <path
+                strokeLinecap="round"
+                strokeLinejoin="round"
+                d="M21 13.255A23.931 23.931 0 0112 15c-3.183 0-6.22-.62-9-1.745M16 6V4a2 2 0 00-2-2h-4a2 2 0 00-2 2v2m4 6h.01M5 20h14a2 2 0 002-2V8a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"
+              />
+            </svg>
             Experience
           </TabsTrigger>
         </TabsList>
@@ -57,12 +90,215 @@ const Showcase = (props: { projects: Project[] }) => {
             ))}
           </div>
         </TabsContent>
+        <TabsContent value="experience">
+          <div className="relative mt-12 pb-12">
+            {/* Decorative elements */}
+            <div className="absolute left-0 top-0 w-32 h-32 bg-accent/5 rounded-full blur-3xl -z-10"></div>
+            <div className="absolute right-0 bottom-0 w-64 h-64 bg-primary/5 rounded-full blur-3xl -z-10"></div>
+            <div className="absolute left-1/4 top-1/3 w-48 h-48 bg-secondary/5 rounded-full blur-3xl -z-10"></div>
+
+            {/* Timeline header */}
+            <div className="text-center mb-16 relative">
+              <p className="text-muted-foreground mt-2 max-w-md mx-auto">
+                A timeline of my professional experiences and growth
+              </p>
+            </div>
+
+            {/* Vertical timeline line with animated gradient */}
+            <div className="absolute left-1/2 transform -translate-x-1/2 h-full w-1 timeline-line"></div>
+
+            {/* Experience items */}
+            {props.experiences?.map((exp, index) => (
+              <div
+                key={exp._id}
+                className={`relative z-10 mb-24 ${index % 2 === 0 ? "ml-auto pr-8 md:ml-[50%] md:pr-0 md:pl-12" : "mr-auto pl-8 md:mr-[50%] md:pl-0 md:pr-12"} w-full md:w-[50%] experience-item`}
+                style={{ animationDelay: `${index * 0.2}s` }}
+              >
+                {/* Timeline dot with ripple effect */}
+                <div
+                  className={`absolute top-6 md:top-8 w-8 h-8 rounded-full bg-accent/20 timeline-dot left-0 md:left-auto md:right-auto md:-ml-4 md:-mr-4 z-10 flex items-center justify-center
+                  ${index % 2 === 0 ? "md:-ml-4 md:left-0" : "md:-mr-4 md:right-0"}`}
+                >
+                  <div className="w-4 h-4 rounded-full bg-accent animate-pulse"></div>
+                  <div className="absolute inset-0 rounded-full ripple-effect"></div>
+                </div>
+
+                {/* Year marker */}
+                <div
+                  className={`hidden md:block absolute top-8 text-sm font-bold text-accent/80 ${index % 2 === 0 ? "right-full mr-8" : "left-full ml-8"}`}
+                >
+                  {new Date(exp.dateStarted).getFullYear()}
+                </div>
+
+                {/* Card */}
+                <div className="group bg-card border border-border rounded-lg overflow-hidden hover:shadow-glow-md transition-all duration-500 ease-out transform hover:-translate-y-2 hover:scale-[1.02] card-hover">
+                  {/* Company image banner */}
+                  <div className="relative h-40 w-full bg-gradient-to-r from-primary/20 via-secondary/20 to-accent/20 overflow-hidden">
+                    {exp.companyImage?.asset ? (
+                      <img
+                        src={urlFor(exp.companyImage.asset).url()}
+                        alt={exp.company}
+                        className="w-full h-full object-cover opacity-80 group-hover:opacity-100 transition-all duration-500 ease-out group-hover:scale-105"
+                      />
+                    ) : (
+                      <div className="w-full h-full flex items-center justify-center">
+                        <span className="text-2xl font-bold text-accent/50">
+                          {exp.company}
+                        </span>
+                      </div>
+                    )}
+
+                    {/* Overlay gradient */}
+                    <div className="absolute inset-0 bg-gradient-to-t from-card via-card/80 to-transparent"></div>
+
+                    {/* Date badge */}
+                    <div className="absolute top-4 right-4 bg-background/80 backdrop-blur-sm text-sm font-medium text-accent px-4 py-1.5 rounded-full border border-accent/30 shadow-glow-sm date-badge">
+                      {new Date(exp.dateStarted).toLocaleDateString("en-US", {
+                        year: "numeric",
+                        month: "short",
+                      })}{" "}
+                      -
+                      {exp.isCrrentlyWorkingHere
+                        ? "Present"
+                        : new Date(exp.dateEnded).toLocaleDateString("en-US", {
+                            year: "numeric",
+                            month: "short",
+                          })}
+                    </div>
+                  </div>
+
+                  <div className="p-6 relative">
+                    {/* Decorative corner accent */}
+                    <div className="absolute top-0 right-0 w-16 h-16 overflow-hidden">
+                      <div className="absolute rotate-45 bg-accent/10 w-8 h-8 -top-4 -right-4 transform origin-bottom-left"></div>
+                    </div>
+
+                    {/* Job title and company */}
+                    <div className="mb-5">
+                      <h3 className="text-2xl font-bold text-accent mb-1 group-hover:text-secondary transition-colors duration-300">
+                        {exp.jobTitle}
+                      </h3>
+                      <p className="text-xl text-muted-foreground">
+                        {exp.company}
+                      </p>
+                    </div>
+
+                    {/* Responsibilities */}
+                    <div className="mb-6">
+                      <h4 className="text-lg font-semibold text-secondary mb-3 flex items-center">
+                        <svg
+                          xmlns="http://www.w3.org/2000/svg"
+                          className="h-5 w-5 mr-2"
+                          fill="none"
+                          viewBox="0 0 24 24"
+                          stroke="currentColor"
+                        >
+                          <path
+                            strokeLinecap="round"
+                            strokeLinejoin="round"
+                            strokeWidth={2}
+                            d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2"
+                          />
+                        </svg>
+                        Responsibilities
+                      </h4>
+                      <ul className="space-y-3">
+                        {exp.points.map((point, i) => (
+                          <li
+                            key={i}
+                            className="flex items-start responsibility-item"
+                            style={{ animationDelay: `${i * 0.1 + 0.3}s` }}
+                          >
+                            <span className="text-accent mr-2 mt-1 flex-shrink-0">
+                              <svg
+                                xmlns="http://www.w3.org/2000/svg"
+                                className="h-5 w-5"
+                                fill="none"
+                                viewBox="0 0 24 24"
+                                stroke="currentColor"
+                              >
+                                <path
+                                  strokeLinecap="round"
+                                  strokeLinejoin="round"
+                                  strokeWidth={2}
+                                  d="M5 13l4 4L19 7"
+                                />
+                              </svg>
+                            </span>
+                            <span className="text-muted-foreground">
+                              {point}
+                            </span>
+                          </li>
+                        ))}
+                      </ul>
+                    </div>
+
+                    {/* Technologies */}
+                    {exp.technologies?.length > 0 && (
+                      <div className="mb-4">
+                        <h4 className="text-lg font-semibold text-secondary mb-3 flex items-center">
+                          <svg
+                            xmlns="http://www.w3.org/2000/svg"
+                            className="h-5 w-5 mr-2"
+                            fill="none"
+                            viewBox="0 0 24 24"
+                            stroke="currentColor"
+                          >
+                            <path
+                              strokeLinecap="round"
+                              strokeLinejoin="round"
+                              strokeWidth={2}
+                              d="M10 20l4-16m4 4l4 4-4 4M6 16l-4-4 4-4"
+                            />
+                          </svg>
+                          Technologies
+                        </h4>
+                        <div className="flex flex-wrap gap-2">
+                          {exp.technologies.map((tech, i) => (
+                            <span
+                              key={tech._id}
+                              className="px-3 py-1 bg-accent/10 text-accent text-sm rounded-full border border-accent/20 hover:bg-accent/20 transition-colors duration-300 tech-badge"
+                              style={{ animationDelay: `${i * 0.05 + 0.5}s` }}
+                            >
+                              {tech.title}
+                            </span>
+                          ))}
+                        </div>
+                      </div>
+                    )}
+
+                    {/* Social links */}
+                    {exp.socials?.length > 0 && (
+                      <div className="mt-6 pt-4 border-t border-border">
+                        <div className="flex gap-3">
+                          {exp.socials.map((social, i) => (
+                            <a
+                              key={social._id}
+                              href={social.url}
+                              target="_blank"
+                              rel="noopener noreferrer"
+                              className="text-muted-foreground hover:text-accent transition-colors duration-300 social-link"
+                              style={{ animationDelay: `${i * 0.1 + 0.7}s` }}
+                            >
+                              {social.title}
+                            </a>
+                          ))}
+                        </div>
+                      </div>
+                    )}
+                  </div>
+                </div>
+              </div>
+            ))}
+          </div>
+        </TabsContent>
       </Tabs>
     </div>
   );
 };
 
 const ProjectCard = ({ project }: { project: Project }) => {
+  console.log({ project });
   return (
     <div className="bg-card border border-border rounded-lg overflow-hidden transform transition-transform duration-300 hover:-translate-y-2 hover:shadow-xl">
       <div className="relative h-56 w-full">
@@ -83,28 +319,30 @@ const ProjectCard = ({ project }: { project: Project }) => {
         <p className="text-muted-foreground mb-4 line-clamp-3">
           {project.summary}
         </p>
-        <a
-          href={project.linkToBuild}
-          target="_blank"
-          rel="noopener noreferrer"
-          className="inline-flex items-center justify-center px-6 py-3 font-medium text-background bg-accent rounded-lg hover:bg-secondary/90 transition-colors duration-300"
-        >
-          View Project
-          <svg
-            xmlns="http://www.w3.org/2000/svg"
-            className="h-5 w-5 ml-2"
-            fill="none"
-            viewBox="0 0 24 24"
-            stroke="currentColor"
+        {project.linkToBuild && (
+          <Link
+            href={project.linkToBuild || "#"}
+            target="_blank"
+            rel="noopener noreferrer"
+            className="inline-flex items-center justify-center px-6 py-3 font-medium text-background bg-accent rounded-lg hover:bg-secondary/90 transition-colors duration-300"
           >
-            <path
-              strokeLinecap="round"
-              strokeLinejoin="round"
-              strokeWidth={2}
-              d="M17 8l4 4m0 0l-4 4m4-4H3"
-            />
-          </svg>
-        </a>
+            View Project
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              className="h-5 w-5 ml-2"
+              fill="none"
+              viewBox="0 0 24 24"
+              stroke="currentColor"
+            >
+              <path
+                strokeLinecap="round"
+                strokeLinejoin="round"
+                strokeWidth={2}
+                d="M17 8l4 4m0 0l-4 4m4-4H3"
+              />
+            </svg>
+          </Link>
+        )}
       </div>
     </div>
   );

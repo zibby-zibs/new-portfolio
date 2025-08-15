@@ -4,7 +4,7 @@ import { Project } from "@/lib/type";
 
 const SlidingProjects = async (props: { projects: Project[] }) => {
   return (
-    <section className="py-10 md:py-16">
+    <section className="py-20 md:py-28">
       {/* <h2 className="text-3xl md:text-4xl font-bold mb-8 text-center">
         My Projects
       </h2> */}
