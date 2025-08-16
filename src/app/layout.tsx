@@ -25,7 +25,7 @@ export default function RootLayout({
           enableSystem
           disableTransitionOnChange
         >
-          <div className="flex items-center justify-end gap-4 p-3">
+          <div className="flex items-center justify-end gap-4 p-3 relative z-30">
             <Link
               href={"https://www.linkedin.com/in/hephzibah-oloyede-237b7915b/"}
             >

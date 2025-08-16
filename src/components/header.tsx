@@ -12,13 +12,16 @@ import {
 } from "@tabler/icons-react";
 
 export function Header() {
-  const handleSmoothScroll = (e: React.MouseEvent<HTMLAnchorElement>, targetId: string) => {
+  const handleSmoothScroll = (
+    e: React.MouseEvent<HTMLAnchorElement>,
+    targetId: string
+  ) => {
     e.preventDefault();
     const targetElement = document.getElementById(targetId);
     if (targetElement) {
       targetElement.scrollIntoView({
-        behavior: 'smooth',
-        block: 'start',
+        behavior: "smooth",
+        block: "start",
       });
     }
   };
@@ -30,7 +33,8 @@ export function Header() {
         <IconHome className="h-full w-full text-neutral-500 dark:text-neutral-300" />
       ),
       href: "#home",
-      onClick: (e: React.MouseEvent<HTMLAnchorElement>) => handleSmoothScroll(e, 'home'),
+      onClick: (e: React.MouseEvent<HTMLAnchorElement>) =>
+        handleSmoothScroll(e, "home"),
     },
     {
       title: "Projects",
@@ -38,7 +42,8 @@ export function Header() {
         <IconCode className="h-full w-full text-neutral-500 dark:text-neutral-300" />
       ),
       href: "#projects",
-      onClick: (e: React.MouseEvent<HTMLAnchorElement>) => handleSmoothScroll(e, 'projects'),
+      onClick: (e: React.MouseEvent<HTMLAnchorElement>) =>
+        handleSmoothScroll(e, "projects"),
     },
     {
       title: "About",
@@ -46,7 +51,8 @@ export function Header() {
         <IconUser className="h-full w-full text-neutral-500 dark:text-neutral-300" />
       ),
       href: "#about",
-      onClick: (e: React.MouseEvent<HTMLAnchorElement>) => handleSmoothScroll(e, 'about'),
+      onClick: (e: React.MouseEvent<HTMLAnchorElement>) =>
+        handleSmoothScroll(e, "about"),
     },
     {
       title: "Showcase",
@@ -54,7 +60,8 @@ export function Header() {
         <IconBriefcase className="h-full w-full text-neutral-500 dark:text-neutral-300" />
       ),
       href: "#showcase",
-      onClick: (e: React.MouseEvent<HTMLAnchorElement>) => handleSmoothScroll(e, 'showcase'),
+      onClick: (e: React.MouseEvent<HTMLAnchorElement>) =>
+        handleSmoothScroll(e, "showcase"),
     },
     {
       title: "Contact",
@@ -62,21 +69,22 @@ export function Header() {
         <IconMail className="h-full w-full text-neutral-500 dark:text-neutral-300" />
       ),
       href: "#contact",
-      onClick: (e: React.MouseEvent<HTMLAnchorElement>) => handleSmoothScroll(e, 'contact'),
+      onClick: (e: React.MouseEvent<HTMLAnchorElement>) =>
+        handleSmoothScroll(e, "contact"),
     },
     {
       title: "GitHub",
       icon: (
         <IconBrandGithub className="h-full w-full text-neutral-500 dark:text-neutral-300" />
       ),
-      href: "https://github.com", // Replace with your actual GitHub URL
+      href: "https://www.github.com/zibby-zibs", // Replace with your actual GitHub URL
     },
     {
       title: "LinkedIn",
       icon: (
         <IconBrandLinkedin className="h-full w-full text-neutral-500 dark:text-neutral-300" />
       ),
-      href: "https://linkedin.com", // Replace with your actual LinkedIn URL
+      href: "https://www.linkedin.com/in/hephzibah-oloyede-237b7915b/", // Replace with your actual LinkedIn URL
     },
   ];
   return (

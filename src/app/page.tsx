@@ -11,7 +11,7 @@ const page = async () => {
   const projects = await fetchProjects();
   const experience = await fetchExperience();
   return (
-    <div className="px-5">
+    <div className="px-5 pb-20">
       <section id="home">
         <Home />
       </section>

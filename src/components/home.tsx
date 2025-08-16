@@ -115,7 +115,7 @@ export default function Home() {
             From backend logic to frontend delight,
             <br />I build with precision, performance, and insight.
           </motion.p>
-          <div className="flex items-center gap-4 py-3">
+          <div className="flex items-center gap-4 py-3 relative">
             <Link
               href={"https://www.linkedin.com/in/hephzibah-oloyede-237b7915b/"}
             >
