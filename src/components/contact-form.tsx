@@ -2,7 +2,14 @@
 
 import React, { useState } from "react";
 import { Button } from "./ui/button";
-import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from "./ui/card";
+import {
+  Card,
+  CardContent,
+  CardDescription,
+  CardFooter,
+  CardHeader,
+  CardTitle,
+} from "./ui/card";
 import { cn } from "@/lib/utils";
 
 interface FormState {
@@ -24,7 +31,9 @@ const ContactForm = () => {
     error: null,
   });
 
-  const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
+  const handleChange = (
+    e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
+  ) => {
     const { name, value } = e.target;
     setFormState((prev) => ({
       ...prev,
@@ -45,7 +54,7 @@ const ContactForm = () => {
         submitted: true,
         loading: false,
       }));
-    } catch (error) {
+    } catch {
       setFormState((prev) => ({
         ...prev,
         loading: false,
@@ -87,9 +96,12 @@ const ContactForm = () => {
       <div className="max-w-2xl mx-auto">
         <Card className="border border-border shadow-lg overflow-hidden hover:shadow-glow-md transition-all duration-500 ease-out">
           <CardHeader className="bg-gradient-to-r from-primary/5 via-secondary/5 to-accent/5 border-b border-border/50">
-            <CardTitle className="text-2xl font-bold text-accent">Get in Touch</CardTitle>
+            <CardTitle className="text-2xl font-bold text-accent">
+              Get in Touch
+            </CardTitle>
             <CardDescription className="text-muted-foreground">
-              Fill out the form below and I'll get back to you as soon as possible.
+              Fill out the form below and I&apos;ll get back to you as soon as
+              possible.
             </CardDescription>
           </CardHeader>
           <CardContent className="pt-6">
@@ -111,20 +123,24 @@ const ContactForm = () => {
                     />
                   </svg>
                 </div>
-                <h3 className="text-xl font-semibold text-accent">Message Sent!</h3>
-                <p className="text-muted-foreground">Thank you for reaching out. I'll respond to your message soon.</p>
-                <Button
-                  onClick={resetForm}
-                  variant="outline"
-                  className="mt-4"
-                >
+                <h3 className="text-xl font-semibold text-accent">
+                  Message Sent!
+                </h3>
+                <p className="text-muted-foreground">
+                  Thank you for reaching out. I&apos;ll respond to your message
+                  soon.
+                </p>
+                <Button onClick={resetForm} variant="outline" className="mt-4">
                   Send Another Message
                 </Button>
               </div>
             ) : (
               <form onSubmit={handleSubmit} className="space-y-6">
                 <div className="space-y-2">
-                  <label htmlFor="name" className="text-sm font-medium text-secondary-foreground">
+                  <label
+                    htmlFor="name"
+                    className="text-sm font-medium text-secondary-foreground"
+                  >
                     Name
                   </label>
                   <div className="relative">
@@ -146,7 +162,10 @@ const ContactForm = () => {
                 </div>
 
                 <div className="space-y-2">
-                  <label htmlFor="email" className="text-sm font-medium text-secondary-foreground">
+                  <label
+                    htmlFor="email"
+                    className="text-sm font-medium text-secondary-foreground"
+                  >
                     Email
                   </label>
                   <div className="relative">
@@ -167,7 +186,10 @@ const ContactForm = () => {
                 </div>
 
                 <div className="space-y-2">
-                  <label htmlFor="message" className="text-sm font-medium text-secondary-foreground">
+                  <label
+                    htmlFor="message"
+                    className="text-sm font-medium text-secondary-foreground"
+                  >
                     Message
                   </label>
                   <div className="relative">
@@ -200,9 +222,25 @@ const ContactForm = () => {
                 >
                   {formState.loading ? (
                     <>
-                      <svg className="animate-spin -ml-1 mr-2 h-4 w-4 text-white" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
-                        <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4"></circle>
-                        <path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
+                      <svg
+                        className="animate-spin -ml-1 mr-2 h-4 w-4 text-white"
+                        xmlns="http://www.w3.org/2000/svg"
+                        fill="none"
+                        viewBox="0 0 24 24"
+                      >
+                        <circle
+                          className="opacity-25"
+                          cx="12"
+                          cy="12"
+                          r="10"
+                          stroke="currentColor"
+                          strokeWidth="4"
+                        ></circle>
+                        <path
+                          className="opacity-75"
+                          fill="currentColor"
+                          d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"
+                        ></path>
                       </svg>
                       Sending...
                     </>
@@ -231,7 +269,8 @@ const ContactForm = () => {
           </CardContent>
           <CardFooter className="border-t border-border/50 bg-gradient-to-r from-accent/5 via-secondary/5 to-primary/5 flex justify-between items-center">
             <div className="text-sm text-muted-foreground">
-              <span className="font-medium">Response time:</span> Usually within 24 hours
+              <span className="font-medium">Response time:</span> Usually within
+              24 hours
             </div>
             <div className="flex space-x-3">
               <a
